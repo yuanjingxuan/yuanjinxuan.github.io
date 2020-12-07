@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/</id>
     <title>Gridea</title>
-    <updated>2020-11-23T14:55:19.882Z</updated>
+    <updated>2020-12-07T08:31:33.047Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/"/>
     <link rel="self" href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/atom.xml"/>
@@ -10,6 +10,69 @@
     <logo>https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/images/avatar.png</logo>
     <icon>https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[VS2019的glew/glad的简单配置]]></title>
+        <id>https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/post/vs2019-de-glewithglad-de-jian-dan-pei-zhi/</id>
+        <link href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/post/vs2019-de-glewithglad-de-jian-dan-pei-zhi/">
+        </link>
+        <updated>2020-12-07T05:17:24.000Z</updated>
+        <content type="html"><![CDATA[<p>GLFW+GLAD配置<br>
+GLFW：<br>
+1）创建一个空项目</p>
+<p>2）修改项目属性<br>
+VC++中的包含目录修改：（把include文件夹加入）<br>
+东西都放在桌面了，<br>
+将glfw的include目录包含进去</p>
+<p>VC++中的库目录修改：<br>
+同样，在桌面找到glfw的src的目录，包含进去</p>
+<p>链接器–&gt;输入–&gt;` 附加依赖项：添加<br>
+opengl32.lib<br>
+glfw3.lib</p>
+<p>http://glad.dav1d.de/<br>
+在线服务网站，gl选择3.3以上版本（3.3是可编程管线版本，更新的版本也能正常工作），语言为c/c++，Profile设置为core，插件不管就行，最后Generate并下载zip文件</p>
+<p>解压glad的压缩包<br>
+glfw的配置和上面一样，需要把glad的include配到包含目录里，然后把glad目录中的src目录下的glad.c复制到项目的源文件夹下即可</p>
+<p>示例程序：</p>
+<p>#include &lt;glad/glad.h&gt;<br>
+#include &lt;GLFW/glfw3.h&gt;<br>
+#include <iostream></p>
+<p>const unsigned int SCR_WIDTH = 800;<br>
+const unsigned int SCR_HEIGHT = 600;</p>
+<p>int main()<br>
+{<br>
+glfwInit();<br>
+glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);<br>
+glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);<br>
+glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</p>
+<pre><code>GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, &quot;LearnOpenGL&quot;, NULL, NULL);
+if (window == NULL)
+{
+    std::cout &lt;&lt; &quot;Failed to create GLFW window&quot; &lt;&lt; std::endl;
+    glfwTerminate();
+    return -1;
+}
+glfwMakeContextCurrent(window);
+
+if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+{
+    std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;
+    return -1;
+}    
+
+while (!glfwWindowShouldClose(window))
+{
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+
+glfwTerminate();
+return 0;
+</code></pre>
+<p>}</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[博客]]></title>
         <id>https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/post/bo-ke/</id>

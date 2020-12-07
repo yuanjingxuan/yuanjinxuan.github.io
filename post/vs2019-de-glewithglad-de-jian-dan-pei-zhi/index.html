@@ -2,23 +2,24 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Gridea</title>
+<title>VS2019的glew/glad的简单配置 | Gridea</title>
 <link rel="shortcut icon" href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io//favicon.ico?v=1607329887376">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Gridea - Atom Feed" href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io//atom.xml">
+<link rel="alternate" type="application/atom+xml" title="VS2019的glew/glad的简单配置 | Gridea - Atom Feed" href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io//atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
-
-🏠 关于本站
-👨‍💻 博主是谁
-⛹ 兴趣爱好
-📬 联系我呀
-..." />
+    <meta name="description" content="GLFW+GLAD配置
+GLFW：
+1）创建一个空项目
+2）修改项目属性
+VC++中的包含目录修改：（把include文件夹加入）
+东西都放在桌面了，
+将glfw的include目录包含进去
+VC++中的库目录修改：
+同样，在桌面找到glf..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -81,46 +82,93 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              VS2019的glew/glad的简单配置
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-12-07
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <p>GLFW+GLAD配置<br>
+GLFW：<br>
+1）创建一个空项目</p>
+<p>2）修改项目属性<br>
+VC++中的包含目录修改：（把include文件夹加入）<br>
+东西都放在桌面了，<br>
+将glfw的include目录包含进去</p>
+<p>VC++中的库目录修改：<br>
+同样，在桌面找到glfw的src的目录，包含进去</p>
+<p>链接器–&gt;输入–&gt;` 附加依赖项：添加<br>
+opengl32.lib<br>
+glfw3.lib</p>
+<p>http://glad.dav1d.de/<br>
+在线服务网站，gl选择3.3以上版本（3.3是可编程管线版本，更新的版本也能正常工作），语言为c/c++，Profile设置为core，插件不管就行，最后Generate并下载zip文件</p>
+<p>解压glad的压缩包<br>
+glfw的配置和上面一样，需要把glad的include配到包含目录里，然后把glad目录中的src目录下的glad.c复制到项目的源文件夹下即可</p>
+<p>示例程序：</p>
+<p>#include &lt;glad/glad.h&gt;<br>
+#include &lt;GLFW/glfw3.h&gt;<br>
+#include <iostream></p>
+<p>const unsigned int SCR_WIDTH = 800;<br>
+const unsigned int SCR_HEIGHT = 600;</p>
+<p>int main()<br>
+{<br>
+glfwInit();<br>
+glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);<br>
+glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);<br>
+glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</p>
+<pre><code>GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, &quot;LearnOpenGL&quot;, NULL, NULL);
+if (window == NULL)
+{
+    std::cout &lt;&lt; &quot;Failed to create GLFW window&quot; &lt;&lt; std::endl;
+    glfwTerminate();
+    return -1;
+}
+glfwMakeContextCurrent(window);
+
+if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+{
+    std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;
+    return -1;
+}    
+
+while (!glfwWindowShouldClose(window))
+{
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+
+glfwTerminate();
+return 0;
+</code></pre>
+<p>}</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://https://yuanjingxuan.github.io/yuanjinxuan.github.io/post/bo-ke/">
+              <h3 class="post-title">
+                博客
+              </h3>
+            </a>
+          </div>
         
 
         
